@@ -2,7 +2,7 @@
   "name": "notification-services",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "dev": "nodemon -r tsconfig-paths/register src/index.ts | pino-pretty -c",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
@@ -27,7 +27,8 @@
     "tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
-    "@nitinthakurdev/jobber-package": "^0.0.2",
+    "@elastic/elasticsearch": "^7.9.0",
+    "@nitinthakurdev/jobber-package": "^0.0.7",
     "amqplib": "^0.10.9",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",

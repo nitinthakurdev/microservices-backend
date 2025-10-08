@@ -5,6 +5,7 @@ import { config } from '@notifications/config';
 import { Application } from 'express';
 import http from "http";
 import { healthRoute } from '@notifications/routes';
+import { checkElasticSearchConnection } from '@notifications/elasticSearch';
 
 
 
@@ -27,7 +28,7 @@ async function startQueues(): Promise<void> {
 
 
 async function startElasticSearch(): Promise<void> {
-
+checkElasticSearchConnection();
 };
 
 function startServer(app: Application): void {
