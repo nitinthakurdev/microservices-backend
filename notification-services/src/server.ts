@@ -34,12 +34,12 @@ checkElasticSearchConnection();
 function startServer(app: Application): void {
     try {
         const httpserver: http.Server = new http.Server(app);
-        log.info(`worker with pid:${process.pid} on notification server has started `);
+        log.info(`worker with pid : ${process.pid} on notification server has started `);
         httpserver.listen(SERVER_PORT, () => {
-            log.info(`Notification service running on port ${SERVER_PORT}`)
+            log.info(`Notification service running on port ${SERVER_PORT}`); 
         })
     } catch (error) {
-        log.log('error', "notification service startServer() method", error)
+        log.log('error', "notification service startServer() method", error);
     }
 }
 
