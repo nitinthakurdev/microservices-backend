@@ -6,6 +6,7 @@ import { Application } from 'express';
 import http from "http";
 import { healthRoute } from '@notifications/routes';
 import { checkElasticSearchConnection } from '@notifications/elasticSearch';
+import { createConnection } from '@notifications/queues/Connection';
 
 
 
@@ -23,7 +24,7 @@ export const start = (app: Application): void => {
 
 
 async function startQueues(): Promise<void> {
-
+createConnection()
 };
 
 
