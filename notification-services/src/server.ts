@@ -7,6 +7,8 @@ import http from "http";
 import { healthRoute } from '@notifications/routes';
 import { checkElasticSearchConnection } from '@notifications/elasticSearch';
 import { createConnection } from '@notifications/queues/Connection';
+import { consumeAuthEmailMessages } from '@notifications/queues/email.consumer';
+import { Channel } from 'amqplib';
 
 
 
@@ -17,19 +19,21 @@ const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, "Notification 
 
 export const start = (app: Application): void => {
     startServer(app);
-    app.use('/',healthRoute())
+    app.use('/', healthRoute())
     startQueues();
     startElasticSearch();
 };
 
 
 async function startQueues(): Promise<void> {
-createConnection()
+    const emailChannel = await createConnection() as Channel;
+    await consumeAuthEmailMessages(emailChannel);
+
 };
 
 
 async function startElasticSearch(): Promise<void> {
-checkElasticSearchConnection();
+    checkElasticSearchConnection();
 };
 
 function startServer(app: Application): void {
@@ -37,7 +41,7 @@ function startServer(app: Application): void {
         const httpserver: http.Server = new http.Server(app);
         log.info(`worker with pid : ${process.pid} on notification server has started `);
         httpserver.listen(SERVER_PORT, () => {
-            log.info(`Notification service running on port ${SERVER_PORT}`); 
+            log.info(`Notification service running on port ${SERVER_PORT}`);
         })
     } catch (error) {
         log.log('error', "notification service startServer() method", error);
