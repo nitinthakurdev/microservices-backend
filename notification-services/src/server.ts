@@ -1,6 +1,6 @@
 import 'express-async-errors';
 import { Logger } from 'winston';
-import { winstonLogger } from "@nitinthakurdev/jobber-package"
+import {  winstonLogger } from "@nitinthakurdev/jobber-package"
 import { config } from '@notifications/config';
 import { Application } from 'express';
 import http from "http";
@@ -28,6 +28,15 @@ export const start = (app: Application): void => {
 async function startQueues(): Promise<void> {
     const emailChannel = await createConnection() as Channel;
     await consumeAuthEmailMessages(emailChannel);
+    // const verifyLink = `${config.CLIENT_URL}/confirm_email?v_token=jasdasjdsjbdasdagdhjgahsjdashd`;
+    // const messageDetail: IEmailMessageDetails = {
+    //     receiverEmail:`${config.SENDER_EMAIL}`,
+    //     verifyLink:verifyLink,
+    //     template:"verifyEmail"
+    // }
+    // await emailChannel.assertExchange("email-notification","direct",);
+    // const message = JSON.stringify(messageDetail);
+    // emailChannel.publish("email-notification","auth-email",Buffer.from(message))
 
 };
 
