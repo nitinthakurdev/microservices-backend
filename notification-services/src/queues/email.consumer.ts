@@ -37,11 +37,8 @@ export const consumeAuthEmailMessages = async (channel: Channel): Promise<void> 
             // acknowledge
             channel.ack(msg!);
         });
-
-
     } catch (error) {
         log.log("error", "NotificationServices error consumeAuthEmailMessages() method", error);
-
     }
 }
 
