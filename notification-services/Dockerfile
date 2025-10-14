@@ -1,4 +1,4 @@
-FROM node:22-alpine:3.21 as builder
+FROM node:22-alpine3.21 as builder
 
 WORKDIR /app
 COPY package.json ./
@@ -12,7 +12,7 @@ RUN npm ci && npm run build
 
 
 
-FROM node:22-alpine:3.21
+FROM node:22-alpine3.21
 
 WORKDIR /app
 RUN apk add --no-cache curl
