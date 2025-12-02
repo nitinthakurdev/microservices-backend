@@ -8,10 +8,12 @@ import cors from "cors";
 import compression from "compression";
 import { StatusCodes } from "http-status-codes";
 import http from "http";
+import { config } from "@gateway/config";
+import { elasticSearch } from "@gateway/elasticSearch";
 
 
 const SERVER_PORT = 4000;
-const log:Logger = winstonLogger("","GatewayService","debug");
+const log:Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,"GatewayService","debug");
 
 
 export class GatewayServer {
@@ -26,7 +28,7 @@ export class GatewayServer {
     public start ():void{
         this.securityMiddleware(this.app);
         this.standardMiddleware(this.app);
-        this.routesMiddleware(this.app);
+        // this.routesMiddleware(this.app);
         this.startElasticSearch();
         this.errorHandler(this.app);
         this.startServer(this.app);
@@ -37,14 +39,14 @@ export class GatewayServer {
         app.set("trust proxy",1);
         app.use(cookieSession({
             name:"session",
-            keys:[],
+            keys:[`${config.SECRET_KEY_ONE}`,`${config.SECRET_KEY_TWO}`],
             maxAge:24 * 7 * 3600000,
-            secure: false,
+            secure: config.NODE_ENV !== "development",
         }));
         app.use(hpp());
         app.use(helmet());
         app.use(cors({
-            origin:"",
+            origin:config.CLIENT_URL,
             credentials:true,
             methods:['GET','POST','PUT','PATCH','OPTIONS']
         }))
@@ -58,13 +60,13 @@ export class GatewayServer {
     };
 
     // ---------------------- create an route middleware all routes pass into this middleware ----------------------------------
-    private routesMiddleware(app:Application):void{
+    // private routesMiddleware(_app:Application):void{
 
-    };
+    // };
 
     // ----------------------- create a function to connect the app into elasticsearch ----------------------
     private startElasticSearch():void{
-
+        elasticSearch.CheckElasticConnection();
     }
 
     // ------------------------- create an error handler to handle all the error ------------------------
