@@ -10,6 +10,7 @@ import { StatusCodes } from "http-status-codes";
 import http from "http";
 import { config } from "@gateway/config";
 import { elasticSearch } from "@gateway/elasticSearch";
+import { AppRoutes } from "./routes";
 
 
 const SERVER_PORT = 4000;
@@ -28,7 +29,7 @@ export class GatewayServer {
     public start ():void{
         this.securityMiddleware(this.app);
         this.standardMiddleware(this.app);
-        // this.routesMiddleware(this.app);
+        this.routesMiddleware(this.app);
         this.startElasticSearch();
         this.errorHandler(this.app);
         this.startServer(this.app);
@@ -60,9 +61,9 @@ export class GatewayServer {
     };
 
     // ---------------------- create an route middleware all routes pass into this middleware ----------------------------------
-    // private routesMiddleware(_app:Application):void{
-
-    // };
+    private routesMiddleware(app:Application):void{
+        AppRoutes(app)
+    };
 
     // ----------------------- create a function to connect the app into elasticsearch ----------------------
     private startElasticSearch():void{
