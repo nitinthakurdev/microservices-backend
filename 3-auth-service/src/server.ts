@@ -1,20 +1,23 @@
-import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from "@nitinthakurdev/jobber-package";
-import { Logger } from "winston";
-import { config } from "./config";
 import { Application, json, NextFunction, Request, Response, urlencoded } from "express";
 import hpp from "hpp";
 import helmet from "helmet";
 import cors from "cors";
 import { verify } from "jsonwebtoken";
 import compression from "compression";
-import { checkElasticSearchConnection } from "@auth/elasticSearch";
 import http from "http";
+import { Logger } from "winston";
+import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from "@nitinthakurdev/jobber-package";
 
+// ----------------------- all local imports here --------------------
+import { config } from "@auth/config";
+import { checkElasticSearchConnection } from "@auth/elasticSearch";
 
+// -------------------------------------- contant data set here ------------------------------
 const SERVER_PORT = 4002;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'AuthService', 'debug');
 
 
+// ------------------------ public function call outside the file and handle all that things ------------------------------
 export function start(app: Application): void {
     securityMiddleware(app);
     standardMiddleware(app);
@@ -25,6 +28,7 @@ export function start(app: Application): void {
     startServer(app);
 };
 
+// -------------------------- security middleware here all the security stuf here ---------------------------------
 function securityMiddleware(app: Application): void {
     app.set("trust proxy", 1);
     app.use(hpp());
@@ -44,24 +48,29 @@ function securityMiddleware(app: Application): void {
     })
 };
 
+// ------------------------------- nessusery middleware to run that server ----------------------------------------
 function standardMiddleware(app: Application): void {
     app.use(compression());
     app.use(json({ limit: "50mb" }));
     app.use(urlencoded({ extended: true, limit: "50mb" }));
 };
 
+// ------------------------------- routes middleware is handle the routing ---------------------------------------
 function routesMiddleware(app: Application): void {
     console.log(app);
 };
 
+// ------------------------------ this is function is used for reqbitmq for queues ----------------------------------
 async function startQueues(): Promise<void> {
 
 };
 
+// ------------------------------- the elastic search function to connect my service to elastic search ------------------
 function startElasticSearch(): void {
     checkElasticSearchConnection()
 };
 
+// ------------------------------ this auth error handler to handle errors ------------------------------
 function authErrorHandler (app:Application):void {
 
      app.use((err:IErrorResponse ,_req:Request,res:Response,next:NextFunction) => {
@@ -75,6 +84,7 @@ function authErrorHandler (app:Application):void {
 
 };
 
+// ------------------------------ start server function to start the server ---------------------------
 function startServer(app:Application):void {
     try {
         const httpServer:http.Server = new http.Server(app);
@@ -86,7 +96,7 @@ function startServer(app:Application):void {
     } catch (error) {
         log.log("error","AuthService startServer() error",error)
     }
-}
+};
 
 
 
