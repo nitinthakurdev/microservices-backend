@@ -1,8 +1,13 @@
 import { Client } from '@elastic/elasticsearch';
 import { winstonLogger } from '@nitinthakurdev/jobber-package';
-import { config } from '@auth/config';
 import { Logger } from 'winston';
 import { ClusterHealthResponse } from '@elastic/elasticsearch/lib/api/types';
+
+// local imports
+import { config } from '@auth/config';
+
+
+
 
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'AuthService-elasticSearch-connection', 'debug');
 
