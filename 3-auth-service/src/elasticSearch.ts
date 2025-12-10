@@ -7,14 +7,17 @@ import { ClusterHealthResponse } from '@elastic/elasticsearch/lib/api/types';
 import { config } from '@auth/config';
 
 
-
-
+// -------------------------- here is all constant data ----------------------------------------
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'AuthService-elasticSearch-connection', 'debug');
 
+
+// --------------------------------- here is create elasticSearchClient here -------------------------- 
 export const elasticSearchClient = new Client({
   node: `${config.ELASTIC_SEARCH_URL}`
 });
 
+
+// ------------------------------- here is check connection to check elsaticSearchConnection ----------------------------
 export async function checkElasticSearchConnection(): Promise<void> {
   let isConnected = false;
   do {
