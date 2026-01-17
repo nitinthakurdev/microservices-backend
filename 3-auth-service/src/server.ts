@@ -11,6 +11,7 @@ import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from "@nitin
 // ----------------------- all local imports here --------------------
 import { config } from "@auth/config";
 import { checkElasticSearchConnection } from "@auth/elasticSearch";
+import { AppRoutes } from "@auth/routes";
 
 // -------------------------------------- contant data set here ------------------------------
 const SERVER_PORT = 4002;
@@ -57,7 +58,7 @@ function standardMiddleware(app: Application): void {
 
 // ------------------------------- routes middleware is handle the routing ---------------------------------------
 function routesMiddleware(app: Application): void {
-    console.log(app);
+    AppRoutes(app);
 };
 
 // ------------------------------ this is function is used for reqbitmq for queues ----------------------------------
