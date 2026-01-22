@@ -5,6 +5,7 @@ import cors from "cors";
 import { verify } from "jsonwebtoken";
 import compression from "compression";
 import http from "http";
+import { Channel } from "amqplib";
 import { Logger } from "winston";
 import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from "@nitinthakurdev/jobber-package";
 
@@ -12,10 +13,12 @@ import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from "@nitin
 import { config } from "@auth/config";
 import { checkElasticSearchConnection } from "@auth/elasticSearch";
 import { AppRoutes } from "@auth/routes";
+import { createConnection } from "@auth/queues/Connection";
 
 // -------------------------------------- contant data set here ------------------------------
 const SERVER_PORT = 4002;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'AuthService', 'debug');
+export let authChennel:Channel ;
 
 
 // ------------------------ public function call outside the file and handle all that things ------------------------------
@@ -63,7 +66,7 @@ function routesMiddleware(app: Application): void {
 
 // ------------------------------ this is function is used for reqbitmq for queues ----------------------------------
 async function startQueues(): Promise<void> {
-
+ authChennel = await createConnection() as Channel;
 };
 
 // ------------------------------- the elastic search function to connect my service to elastic search ------------------
