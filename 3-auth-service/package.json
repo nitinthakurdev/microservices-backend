@@ -20,9 +20,10 @@
   "license": "ISC",
   "dependencies": {
     "@elastic/elasticsearch": "^9.2.0",
-    "@nitinthakurdev/jobber-package": "^0.0.8",
+    "@nitinthakurdev/jobber-package": "^0.0.9",
     "amqplib": "^0.10.9",
     "bcrypt": "^6.0.0",
+    "cloudinary": "^2.9.0",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -38,6 +39,7 @@
     "sequelize": "^6.37.7",
     "typescript": "^5.9.3",
     "typescript-transform-paths": "^3.5.5",
+    "uuid": "^13.0.0",
     "winston": "^3.18.3"
   },
   "devDependencies": {
