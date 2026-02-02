@@ -20,7 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "@elastic/elasticsearch": "^9.2.0",
-    "@nitinthakurdev/jobber-package": "^0.0.9",
+    "@nitinthakurdev/jobber-package": "^0.1.0",
     "amqplib": "^0.10.9",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.9.0",

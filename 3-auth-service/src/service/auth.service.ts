@@ -44,7 +44,7 @@ export const getAuthUserByUsernameAndEmail = async (username: string, email: str
             [Op.or]: [{ username: firstLetterUppercase(username) }, { email: lowerCase(email) }]
         },
     }) as Model;
-    return result.dataValues;
+    return result?.dataValues;
 };
 
 
@@ -52,7 +52,7 @@ export const getAuthUserByUsername = async (username: string): Promise<IAuthDocu
     const result: Model = await AuthModel.findOne({
         where: { username: firstLetterUppercase(username) },
     }) as Model;
-    return result.dataValues;
+    return result?.dataValues;
 };
 
 
@@ -60,7 +60,7 @@ export const getAuthUserByEmail = async (email: string): Promise<IAuthDocument> 
     const result: Model = await AuthModel.findOne({
         where: { email: lowerCase(email) },
     }) as Model;
-    return result.dataValues;
+    return result?.dataValues;
 };
 
 
