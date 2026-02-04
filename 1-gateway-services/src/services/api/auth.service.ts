@@ -3,7 +3,7 @@ import { AxiosService } from "@gateway/services/axios";
 import { config } from "@gateway/config";
 import { IAuth } from "@nitinthakurdev/jobber-package";
 
-export let axiosAuthInstance: ReturnType<typeof axios.create>
+export let axiosAuthInstance: ReturnType<typeof axios.create>;
 
 
 class AuthService {

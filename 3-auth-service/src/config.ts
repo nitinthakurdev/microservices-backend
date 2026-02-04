@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import Cloudinary from "cloudinary";
+import cloudinary from "cloudinary";
 dotenv.config();
 
 
@@ -25,16 +25,16 @@ class Config {
         this.MYSQL_DB = process.env.MYSQL_DB || "";
         this.RABBITMQ_ENDPOINT = process.env.RABBITMQ_ENDPOINT || "";
         this.ELASTIC_SEARCH_URL = process.env.ELASTIC_SEARCH_URL || "";
-        this.CLOUD_NAME = process.env.CLOUD_NAME || "";
-        this.CLOUD_API_KEY = process.env.CLOUD_API_KEY || "";
-        this.CLOUD_API_SECRET = process.env.CLOUD_API_SECRET || "";
+        // this.CLOUD_NAME = process.env.CLOUD_NAME || "";
+        // this.CLOUD_API_KEY = process.env.CLOUD_API_KEY || "";
+        // this.CLOUD_API_SECRET = process.env.CLOUD_API_SECRET || "";
     };
 
     public cloudnaryConfig():void{
-        Cloudinary.v2.config({
-            cloud_name:this.CLOUD_NAME,
-            api_key:this.CLOUD_API_KEY,
-            api_secret:this.CLOUD_API_KEY
+        cloudinary.v2.config({
+            cloud_name:process.env.CLOUD_NAME,
+            api_key:process.env.CLOUD_API_KEY,
+            api_secret:process.env.CLOUD_API_SECRET
         })
     }
 };

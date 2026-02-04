@@ -48,14 +48,14 @@ const AuthModel: ModelDefined<IAuthDocument, AuthUserCreationAttributes> & AuthM
     allowNull: false,
     defaultValue: 0
   },
-  browserName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  deviceType: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+  // browserName: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false
+  // },
+  // deviceType: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false
+  // },
   otp: {
     type: DataTypes.STRING
   },
