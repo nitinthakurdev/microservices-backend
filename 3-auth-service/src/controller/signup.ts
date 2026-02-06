@@ -18,7 +18,7 @@ export const create = async (req:Request, res:Response) => {
     const { username, email, password, country, profilePicture } = req.body;
     const checkUserExist: IAuthDocument = await getAuthUserByUsernameAndEmail(username, email);
     if (checkUserExist) {
-        throw new BadRequestError("Invalid credentials. Email or Username", "Signup create() method error")
+        throw new BadRequestError("Already register Email or Username", "Signup create() method error")
     }
 
     const profilePublicId = uuidV4();

@@ -1,13 +1,15 @@
+import "express-async-errors";
+
 import { Application, json, NextFunction, Request, Response, urlencoded } from "express";
 import hpp from "hpp";
 import helmet from "helmet";
 import cors from "cors";
-import { verify } from "jsonwebtoken";
+// import { verify } from "jsonwebtoken";
 import compression from "compression";
 import http from "http";
 import { Channel } from "amqplib";
 import { Logger } from "winston";
-import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from "@nitinthakurdev/jobber-package";
+import { CustomError, IErrorResponse, winstonLogger } from "@nitinthakurdev/jobber-package";
 
 // ----------------------- all local imports here --------------------
 import { config } from "@auth/config";
@@ -44,9 +46,9 @@ function securityMiddleware(app: Application): void {
     }));
     app.use((req: Request, _res: Response, next: NextFunction) => {
         if (req.headers.authorization) {
-            const token = req.headers.authorization.split(" ")[1];
-            const payload = verify(token, config.GATEWAY_JWT_TOKEN!) as IAuthPayload;
-            req.currentUser = payload;
+            // const token = req.headers.authorization.split(" ")[1];
+            // const payload = verify(token, config.GATEWAY_JWT_TOKEN!) as IAuthPayload;
+            // req.currentUser = payload;
         };
         next()
     })
@@ -77,12 +79,11 @@ function startElasticSearch(): void {
 // ------------------------------ this auth error handler to handle errors ------------------------------
 function authErrorHandler (app:Application):void {
 
-     app.use((err:IErrorResponse ,_req:Request,res:Response,next:NextFunction) => {
-            log.log('error',`GatewayService ${err.commingFrom}`,err);
-            if(err instanceof CustomError){
+     app.use((err:IErrorResponse ,_req:Request,res:Response,_next:NextFunction) => {
+        if(err instanceof CustomError){
+                log.log('error',`GatewayService ${err.comingFrom}`,err);
                 res.status(err.statusCodes).json(err.serializeError())
             };
-            next();
         })
 
 
